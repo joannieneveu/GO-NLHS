@@ -1,0 +1,6 @@
+{
+  "name": "NLHS Gyn-Onc Website",
+  "description": "An empathetic, informative guide for gynecologic oncology patients at NLHS, provided by Dr. Joannie Neveu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

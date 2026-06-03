@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #0F1115;
+  --color-sage-soft: #D1D8D0;
+  --color-rose-450: #ec4899;
+  --font-serif: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-slate-300 font-sans antialiased selection:bg-rose-500/30;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif font-medium text-slate-100 tracking-tight;
+  }
+}
+
+.glass-card {
+  @apply bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl shadow-2xl;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-rose-200 to-indigo-200;
+}
+
+.glow-rose {
+  @apply absolute -z-10 w-64 h-64 bg-rose-500/10 blur-[100px] rounded-full;
+}
+
+.glow-indigo {
+  @apply absolute -z-10 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full shadow-2xl shadow-indigo-500/20;
+}
+
+/* Accordion Customization for FAQ */
+details[open] summary svg {
+  @apply rotate-180;
+}
+
+.markdown-body {
+  @apply space-y-4 leading-relaxed;
+}
+
+.markdown-body h3 {
+  @apply text-xl mt-6 mb-2 text-rose-200/90;
+}
+
+.markdown-body ul {
+  @apply list-disc pl-5 mt-2 space-y-1;
+}
+
+.markdown-body p {
+  @apply mb-4;
+}
