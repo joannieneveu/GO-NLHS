@@ -1027,7 +1027,7 @@ rejuvenation, resulting in substantially enhanced life expectancy and well-being
             <Users size={20} className="text-rose-400" /> Patients as Partners
           </h4>
           <p className="text-slate-400 text-sm leading-relaxed font-light">
-            In medical oncology, clinical trials are the sole mechanism enabling safer, more effective treatments. Our St. John's network partners with international groups (like GOG, COG, and BioNTech) to offer therapies years before they are broadly released. Participating is completely optional, and will never affect the grade or promptness of your general care.
+            In gynecologic oncology, clinical trials are the sole mechanism enabling safer, more effective treatments. Our St. John's network partners with international groups (such as GOG, COG, and BioNTech) to offer therapies years before they are widely available. Participating is completely optional and will never affect your overall grade or the timeliness of your care.
           </p>
         </div>
 
@@ -1037,7 +1037,7 @@ rejuvenation, resulting in substantially enhanced life expectancy and well-being
               <Activity size={20} className="text-indigo-400" /> Bariatric Research Integration
             </h4>
             <p className="text-slate-400 text-sm leading-relaxed font-light mt-3">
-              The ongoing **Coordinated Bariatric-Hysterectomy Research Initiative**, supervised by **Dr. Joannie Neveu** alongside co-investigator **Dr. David Pace**, represents a unique clinical paradigm. By combining tumor excision with weight-loss sleeve surgery in one operation, we actively target the biological root causes of endometrial tissue changes to protect patients against recurrence and reduce severe metabolic comorbidities simultaneously.
+              The ongoing <span className="text-rose-300 font-semibold">Coordinated Bariatric-Hysterectomy Research Initiative</span>, supervised by <span className="text-rose-300 font-semibold">Dr. Joannie Neveu</span> alongside co-investigator <span className="text-rose-300 font-semibold">Dr. David Pace</span>, represents a unique clinical paradigm. By combining tumour excision with weight-loss sleeve surgery in a single operation, we actively target the biological root causes of endometrial tissue changes to protect patients against recurrence and simultaneously reduce severe metabolic comorbidities.
             </p>
           </div>
           <a
