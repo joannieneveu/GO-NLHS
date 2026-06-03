@@ -46,13 +46,13 @@ export default function App() {
 
   const navItems = [
     { id: 'home', label: 'Welcome', icon: Heart },
+    { id: 'team', label: 'Our Team', icon: Users },
     { id: 'diagnosis', label: 'Diagnosis & Care', icon: Stethoscope },
     { id: 'surgery', label: 'Surgery & ERAS', icon: Wind },
+    { id: 'resources', label: 'Resources & FAQ', icon: Info },
     { id: 'trials', label: 'Clinical Trials', icon: FlaskConical },
     { id: 'bariatric', label: 'Bariatric Hub', icon: Scale },
-    { id: 'team', label: 'Our Team', icon: Users },
     { id: 'hope', label: 'Stories of Hope', icon: BookOpen },
-    { id: 'resources', label: 'Resources & FAQ', icon: Info },
   ];
 
   return (
