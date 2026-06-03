@@ -95,6 +95,92 @@ const BCCA_DRUGS = [
       'Subtle increase in blood pressure or blood sugar levels'
     ],
     selfCareTips: 'Take tablets at the same time each day. Keep a record of any sudden weight gain due to water retention, and monitor blood pressure weekly.'
+  },
+  {
+    name: 'Olaparib (Lynparza)',
+    category: 'PARP Inhibitor (Targeted Therapy)',
+    indicativeUse: 'First-line or recurrent maintenance treatment of BRCA-mutated advanced epithelial ovarian, fallopian tube, or primary peritoneal cancers.',
+    administration: 'Taken orally as tablets twice daily at home.',
+    sideEffects: [
+      'Mild to moderate nausea, vomiting, or recurrent diarrhea',
+      'Fatigue, generalized weakness, and headache',
+      'Decreased appetite, indigestion, or metallic taste sensations',
+      'Temporary lowering of red and white blood counts'
+    ],
+    selfCareTips: 'Avoid grapefruit, grapefruit juice, and Seville oranges while taking Olaparib as they can increase drug levels. Sip plenty of water to control nausea, and take with or without food as comfortable.'
+  },
+  {
+    name: 'Niraparib (Zejula)',
+    category: 'PARP Inhibitor (Targeted Therapy)',
+    indicativeUse: 'Maintenance treatment of adult patients with advanced epithelial ovarian, fallopian tube, or primary peritoneal cancers who are in response to first-line platinum-based chemotherapy.',
+    administration: 'Taken orally as daily capsules taken at home.',
+    sideEffects: [
+      'High blood pressure (hypertension) and occasional racing heart rates',
+      'Lowered platelet counts (easy bleeding, nosebleeds, or skin bruising)',
+      'Trouble sleeping (insomnia), headaches, and mild fatigue'
+    ],
+    selfCareTips: 'Coordinate with clinic to check blood pressure and heart rate weekly for the first two months. Taking your capsule at bedtime can significantly alleviate any initial overnight nausea.'
+  },
+  {
+    name: 'Tamoxifen',
+    category: 'Hormone Receptor Modulator',
+    indicativeUse: 'Adjuvant treatment for hormone-receptor sensitive endometrial cancers and advanced sarcomas of the uterine tract.',
+    administration: 'Taken orally as single daily tablets.',
+    sideEffects: [
+      'Hot flashes, night sweats, and occasional vaginal dryness',
+      'Mild increase in risk of deep vein thrombosis (calf/leg blood clots)',
+      'Infrequent lightheadedness or pelvic pressure'
+    ],
+    selfCareTips: 'Contact Melanie Reardon or Tayler Carroll immediately if you experience sudden pain, warmth, or swelling in either calf. Ensure you remain active and mobile on long-distance trips.'
+  },
+  {
+    name: 'Letrozole (Femara)',
+    category: 'Aromatase Inhibitor (Hormone Therapy)',
+    indicativeUse: 'Recurrent or advanced low-grade endometrial stromal sarcomas and stage-advanced endometrial carcinoma.',
+    administration: 'Taken orally as a daily tablet with or without food.',
+    sideEffects: [
+      'Joint aches, muscle stiffness, and increased risk of bone density thinning',
+      'Mild hot flashes, sleeplessness, and general tiredness',
+      'Subtle raise in cholesterol markers'
+    ],
+    selfCareTips: 'Implement low-impact weight-bearing exercises to protect bone structure. Speak to Dr. Neveu about getting a baseline bone density (DEXA) scan, and supplement with Calcium and Vitamin D3.'
+  },
+  {
+    name: 'Dostarlimab (Jemperli)',
+    category: 'Monoclonal Antibody (Immunotherapy)',
+    indicativeUse: 'Recurrent or advanced mismatch repair-deficient (dMMR) endometrial cancer.',
+    administration: 'Intravenous (IV) infusion over 30 minutes in the day unit every 3 or 6 weeks.',
+    sideEffects: [
+      'Inflammatory reactions in the lungs, colon, or hormone glands',
+      'General physical fatigue, dry skin surface, and minor rashes',
+      'Thyroid level imbalances (either sluggishness or racing heart)'
+    ],
+    selfCareTips: 'Seek immediate guidance if you develop a new dry cough, unexplained shortness of breath, severe stomach cramps, or watery diarrhea, as these can indicate serious immune-mediated reactions.'
+  },
+  {
+    name: 'Lenvatinib (Lenvima)',
+    category: 'Multi-Kinase Inhibitor (Targeted Therapy)',
+    indicativeUse: 'Usually combined with Pembrolizumab (Keytruda) for advanced endometrial cancer that is not dMMR or MSI-H.',
+    administration: 'Taken orally as capsules once daily to be swallowed whole.',
+    sideEffects: [
+      'Severe high blood pressure (hypertension)',
+      'Redness, swelling, numbness, or painful peeling on hands and feet (hand-foot joint/skin syndrome)',
+      'Frequent loose stools or severe diarrhea',
+      'Voice hoarseness, mouth sensitivity, or weight loss'
+    ],
+    selfCareTips: 'Keep a daily log of blood pressure readings. Apply thick, comforting creams to palms and soles twice daily. Use mild, alcohol-free oral rinses to prevent mouth sores.'
+  },
+  {
+    name: 'Bevacizumab (Avastin)',
+    category: 'VEGF Inhibitor (Targeted Therapy)',
+    indicativeUse: 'Advanced, recurrent, or persistent epithelial ovarian cancer, fallopian tube, or peritoneal cancers.',
+    administration: 'Intravenous (IV) infusion, usually scheduled every 2 or 3 weeks in the daycare unit.',
+    sideEffects: [
+      'Increased blood pressure and protein leakage in urine scans',
+      'Delayed surgical wound healing or minor spontaneous nosebleeds',
+      'Slight increase in blood clot risks or mucosal lining sensitivity'
+    ],
+    selfCareTips: 'Do not schedule any invasive dental work or elective surgeries without consulting your medical team. You must hold Bevacizumab for at least 4-6 weeks prior to any planned operations.'
   }
 ];
 
@@ -249,6 +335,61 @@ export default function ResourcesTab() {
   const [pdfSearchQuery, setPdfSearchQuery] = useState('');
   const [pdfCategory, setPdfCategory] = useState<string>('all');
 
+  // Drug Search State
+  const [drugSearchQuery, setDrugSearchQuery] = useState('');
+  const [selectedLetter, setSelectedLetter] = useState<string>('All');
+
+  const downloadDrugPdf = (drug: typeof BCCA_DRUGS[0]) => {
+    const divider = '='.repeat(80);
+    const line = '-'.repeat(80);
+    const fileContent = `${divider}
+BRITISH COLUMBIA CANCER AGENCY (BCCA) CLINICAL DRUG MONOGRAPH
+${drug.name.toUpperCase()} (${drug.category.toUpperCase()})
+${divider}
+Download File Reference: BCCA_${drug.name.replace(/\s+/g, '_')}_Guide.pdf
+Format: Adobe PDF (Digital Monograph Simulation)
+Document Scale: 3 Pages | Support Code: BCCA-RX-${drug.name.slice(0, 3).toUpperCase()}
+Original Issuing Body: BC Cancer Agency Pharmacy Services
+NLHS Clinical Division Lead: Dr. Joannie Neveu
+Coordinating Staff contacts: Melanie Reardon / Tayler Carroll
+${line}
+
+CLINICAL INTENDED USE:
+${drug.indicativeUse}
+
+ADMINISTRATION MODE:
+${drug.administration}
+
+${line}
+EXPECTED TOXICITIES & CLINICAL SIDE EFFECTS:
+${drug.sideEffects.map((effect, index) => `${index + 1}. [!] ${effect}`).join('\n')}
+
+${line}
+SELF-CARE & CLINICAL SAFETY ACTIONS FOR PATIENTS:
+${drug.selfCareTips}
+
+${line}
+HOW TO DISCUSSS THIS THERAPY IN AREA D CLINICS:
+1. Carry a printed or downloaded digital copy of this monograph to every chemotherapy cycle.
+2. Log any occurrence of symptoms listed above in your treatment journal to review with Dr. Neveu.
+3. If oral temperature rises above 38.0°C (100.4°F) or severe chills develop, seek emergency care immediately.
+4. Contact Care Coordinators Melanie Reardon (709-777-4836) or Tayler Carroll (709-777-6564) or medical team. Information is also accessible on MyChart.
+
+DISCLAIMER:
+This digital handout is an electronic patient-care guide curated from official BCCA oncology monographs. It does not replace live clinical supervision. Review all regimens and symptoms with your physician.
+${divider}`;
+
+    const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = `BCCA_Drug_Manual_${drug.name.replace(/\s+/g, '_')}.pdf`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    URL.revokeObjectURL(url);
+  };
+
   const downloadPdfGuide = (doc: typeof CANCER_PDFS[0]) => {
     const divider = '='.repeat(80);
     const line = '-'.repeat(80);
@@ -316,6 +457,40 @@ ${divider}`;
     
     if (pdfCategory === 'all') return matchesSearch;
     return matchesSearch && pdf.category === pdfCategory;
+  });
+
+  // Filter & Sort BCCA Drugs
+  const lettersWithDrugs = new Set(BCCA_DRUGS.map(d => d.name.trim().charAt(0).toUpperCase()));
+
+  const getDrugPriority = (name: string) => {
+    const norm = name.toLowerCase();
+    if (norm.includes('carboplatin')) return 1;
+    if (norm.includes('paclitaxel') || norm.includes('taxol')) return 2;
+    return 100;
+  };
+
+  const filteredDrugs = BCCA_DRUGS.filter(drug => {
+    const matchesSearch = drug.name.toLowerCase().includes(drugSearchQuery.toLowerCase()) ||
+                          drug.category.toLowerCase().includes(drugSearchQuery.toLowerCase()) ||
+                          drug.indicativeUse.toLowerCase().includes(drugSearchQuery.toLowerCase()) ||
+                          drug.administration.toLowerCase().includes(drugSearchQuery.toLowerCase()) ||
+                          drug.sideEffects.some(se => se.toLowerCase().includes(drugSearchQuery.toLowerCase())) ||
+                          drug.selfCareTips.toLowerCase().includes(drugSearchQuery.toLowerCase());
+    
+    if (!matchesSearch) return false;
+
+    if (selectedLetter !== 'All') {
+      return drug.name.trim().toUpperCase().startsWith(selectedLetter);
+    }
+
+    return true;
+  }).sort((a, b) => {
+    const priorityA = getDrugPriority(a.name);
+    const priorityB = getDrugPriority(b.name);
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+    return a.name.localeCompare(b.name);
   });
 
   const toggleFaqSelection = (faqQuestion: string) => {
@@ -388,7 +563,7 @@ ${divider}`;
                   <Sparkles size={18} /> NLHS Personalized Visit Organizer
                 </h4>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Select important FAQs by checking their cards below. Compile and print a personalized sheet containing St. John's clinician office contacts, parking coordinates, and custom checklists to carry to your appointments.
+                  Select important FAQs by checking their cards below. Compile and print a personalized sheet containing St. John's clinician office contacts and custom checklists to carry to your appointments.
                 </p>
               </div>
               <button
@@ -471,9 +646,7 @@ ${divider}`;
                           <ChevronDown className="text-slate-500 transition-transform duration-300 shrink-0" size={17} />
                         </summary>
                         <div className="px-5 pb-5 pl-13 text-slate-450 font-light leading-relaxed text-sm">
-                          <div className="border-t border-white/5 pt-4">
-                            {faq.answer}
-                          </div>
+                          <div className="border-t border-white/5 pt-4" dangerouslySetInnerHTML={{ __html: faq.answer }} />
                         </div>
                       </details>
                     </div>
@@ -484,66 +657,6 @@ ${divider}`;
                     No matching FAQs found. Try searching for other terms like 'work', 'incisions', or 'car'.
                   </div>
                 )}
-              </div>
-            </div>
-
-            {/* Facility map & Parking */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-slate-800/80 pt-12">
-              {/* Left: Interactive Facility Map Guide */}
-              <div className="glass-card p-8 space-y-6 border-white/5">
-                <h3 className="text-2xl font-serif flex items-center gap-2">
-                  <MapPin size={22} className="text-rose-400" /> St. John's Health Sciences Centre
-                </h3>
-                <p className="text-slate-400 text-sm font-light leading-relaxed">
-                  The **Gynecologic Oncology Outpatient Clinic** and the **Breast Clinic** are located on the **4th Floor of Area D** in the Health Sciences Centre (St. John's, NL).
-                </p>
-
-                {/* Visual CSS diagram representing clinic coordinates */}
-                <div className="p-6 bg-obsidian border border-slate-800 rounded-xl space-y-4 font-mono text-[11px] text-slate-400">
-                  <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-indigo-300">🏢 CLINIC DIRECTORY</span>
-                    <span className="text-rose-300">NLHS AREA D</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="p-2 bg-white/5 rounded border border-white/5 flex justify-between">
-                      <span>Floor 4 — Gynecology Outpatient Clinic</span>
-                      <span className="text-rose-450 font-bold">ACTIVE WING</span>
-                    </div>
-                    <div className="p-2 bg-white/5 rounded border border-white/5 flex justify-between">
-                      <span>Floor 4 — Clinical Breast Unit</span>
-                      <span className="text-indigo-400">AREA D</span>
-                    </div>
-                    <div className="p-2 bg-white/5 rounded border border-white/5 flex justify-between">
-                      <span>Floor 1 — Area D Clinic Entrance & Elevators</span>
-                      <span className="text-slate-500">ENTRY</span>
-                    </div>
-                  </div>
-                  <div className="text-[10px] text-slate-500 italic font-sans font-light">
-                    *Elevator bank D offers direct access with wheelchair ramps immediately upon entry the rotunda.
-                  </div>
-                </div>
-              </div>
-
-              {/* Right: Parking instructions */}
-              <div className="glass-card p-8 space-y-4 border-indigo-500/10">
-                <h4 className="text-xl font-serif text-indigo-400">Patient Parking & Fees</h4>
-                <p className="text-slate-450 text-sm font-light leading-relaxed">
-                  The main parking lot is directly in front of the Health Sciences Centre entrance. Overflow patient rates and multi-day validation passes are administered by the Security Desk located in the Main Lobby.
-                </p>
-                <ul className="space-y-3 pt-2 text-slate-400">
-                  <li className="flex items-start gap-2 text-xs font-light">
-                    <span className="w-1 h-1 rounded-full bg-indigo-400 mt-2 shrink-0" />
-                    <span>Hourly Rate: $1.50 per hour.</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-xs font-light">
-                    <span className="w-1 h-1 rounded-full bg-indigo-400 mt-2 shrink-0" />
-                    <span>Multi-Day Passes: Available for 5-day and 10-day intervals, significantly reducing costs for daily radiation or chemotherapy therapies.</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-xs font-light">
-                    <span className="w-1 h-1 rounded-full bg-indigo-400 mt-2 shrink-0" />
-                    <span>Wheelchair Drop-off: A ramp and covered turnaround zone are provided adjacent to the Area D Clinician Wing entrance for immediate bedside discharge.</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </motion.div>
@@ -568,8 +681,73 @@ ${divider}`;
               </p>
             </div>
 
+            {/* Search Input and Alphabetical Index for BCCA Drug Monographs */}
+            <div className="space-y-4">
+              <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
+                <div className="relative flex-1 max-w-sm">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" size={15} />
+                  <input
+                    type="text"
+                    value={drugSearchQuery}
+                    onChange={(e) => setDrugSearchQuery(e.target.value)}
+                    placeholder="Search drugs by name, use, or side effect..."
+                    className="w-full pl-10 p-2.5 rounded-xl bg-obsidian border border-slate-700/60 text-slate-200 text-xs focus:outline-none focus:border-rose-450 transition-colors placeholder:text-slate-650"
+                  />
+                </div>
+                {selectedLetter !== 'All' && (
+                  <button
+                    onClick={() => setSelectedLetter('All')}
+                    className="px-3 py-1.5 rounded-lg text-xs font-mono bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 hover:border-rose-500/30 font-bold transition-all cursor-pointer w-fit self-start md:self-auto animate-fadeIn"
+                  >
+                    Clear Alphabet Filter ({selectedLetter})
+                  </button>
+                )}
+              </div>
+
+              {/* Alphabetical Selection Bar */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">Search by starting letter:</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800/80 font-mono">
+                    High-Priority: C & P (Always Top)
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-1.2 items-center bg-obsidian/40 p-2.5 rounded-xl border border-slate-800/80">
+                  <button
+                    onClick={() => setSelectedLetter('All')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer ${
+                      selectedLetter === 'All'
+                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/35 font-bold shadow-sm shadow-rose-950/20'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
+                    }`}
+                  >
+                    ALL
+                  </button>
+                  {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(char => {
+                    const hasDrugs = lettersWithDrugs.has(char);
+                    return (
+                      <button
+                        key={char}
+                        disabled={!hasDrugs}
+                        onClick={() => setSelectedLetter(char)}
+                        className={`w-7 h-7 flex items-center justify-center rounded-lg text-xs font-mono transition-all ${
+                          selectedLetter === char
+                            ? 'bg-rose-500/25 text-rose-200 border border-rose-500/40 font-bold shadow-sm shadow-rose-950/40'
+                            : hasDrugs
+                            ? 'text-slate-300 hover:text-slate-100 hover:bg-slate-800 border border-slate-800/80 hover:border-slate-750 cursor-pointer'
+                            : 'text-slate-650 cursor-not-allowed select-none border border-transparent opacity-25'
+                        }`}
+                      >
+                        {char}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {BCCA_DRUGS.map((drug) => (
+              {filteredDrugs.map((drug) => (
                 <div key={drug.name} className="glass-card p-6 border-white/5 space-y-4 hover:border-slate-800 transition-all font-light flex flex-col justify-between">
                   <div className="space-y-3">
                     <div className="flex items-start justify-between border-b border-white/5 pb-2.5">
@@ -603,19 +781,36 @@ ${divider}`;
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-850 mt-4 bg-rose-500/[0.02] p-3 rounded-lg border border-rose-500/10">
-                    <strong className="text-teal-400 font-mono text-[10px] uppercase block tracking-widest">Self-Care & Patient Safety Tips:</strong>
-                    <p className="text-slate-300 text-xs mt-1 leading-normal italic">
-                      "{drug.selfCareTips}"
-                    </p>
+                  <div className="space-y-3 pt-3 border-t border-slate-850 mt-4">
+                    <div className="bg-rose-500/[0.02] p-3 rounded-lg border border-rose-500/10">
+                      <strong className="text-teal-400 font-mono text-[10px] uppercase block tracking-widest">Self-Care & Patient Safety Tips:</strong>
+                      <p className="text-slate-300 text-xs mt-1 leading-normal italic">
+                        "{drug.selfCareTips}"
+                      </p>
+                    </div>
+
+                    {/* Direct Monograph PDF Downloader */}
+                    <button
+                      onClick={() => downloadDrugPdf(drug)}
+                      className="w-full py-2 border border-rose-500/20 bg-rose-500/10 hover:bg-rose-500/25 text-rose-200 hover:text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all"
+                    >
+                      <DownloadCloud size={14} />
+                      <span>Download BCCA Monograph</span>
+                    </button>
                   </div>
                 </div>
               ))}
+
+              {filteredDrugs.length === 0 && (
+                <div className="col-span-full text-center p-12 text-slate-500 font-light bg-obsidian rounded-2xl border border-slate-850/40">
+                  No drugs found matching your search. Try searching for "Carboplatin", "Paclitaxel" or other drug types.
+                </div>
+              )}
             </div>
 
             <div className="p-4 rounded-xl bg-obsidian border border-slate-850 text-center">
               <p className="text-xs text-slate-500 font-light">
-                Need more information on specialized drugs? Contact care coordinators <span className="text-rose-300 font-semibold">Melanie Reardon</span> at <span className="font-mono text-rose-300">(709) 777-4836</span> or search the full BC Cancer monograph database directly.
+                Need more information on specialized drugs? Contact our specialized pharmacist <span className="text-rose-300 font-semibold">Nadine Glynn</span> at <span className="font-mono text-rose-300">(709) 777-2488</span> or search the full BC Cancer monograph database directly.
               </p>
             </div>
           </motion.div>
@@ -763,7 +958,7 @@ ${divider}`;
             {/* Standard footer notice regarding consultations */}
             <div className="p-4 rounded-xl bg-obsidian text-center max-w-3xl mx-auto space-y-1 bg-rose-500/[0.01] border border-rose-500/5">
               <p className="text-xs text-slate-450 font-light">
-                Note: All PDF copies are curated directly from BCCA oncology directives. Verify schedules and coordinates with care coordinators <span className="text-rose-300 font-sans font-semibold">Melanie Reardon</span> or <span className="text-rose-300 font-sans font-semibold">Tayler Carroll</span> during checkout blocks.
+                Note: All PDF copies are curated directly from BCCA oncology directives. Verify schedules and coordinates with care coordinators <span className="text-rose-300 font-sans font-semibold">Melanie Reardon</span> or <span className="text-rose-300 font-sans font-semibold">Tayler Carroll</span> or medical team. Information is also accessible on MyChart.
               </p>
             </div>
           </motion.div>
@@ -836,7 +1031,7 @@ ${divider}`;
                   {FAQS.filter(faq => selectedFaqs[faq.question]).map((faq, i) => (
                     <div key={i} className="text-sm space-y-1">
                       <p className="font-serif font-bold text-slate-100 print:text-black">Q: {faq.question}</p>
-                      <p className="text-slate-400 print:text-slate-650 leading-relaxed font-light font-sans text-xs pl-4 border-l-2 border-rose-500/20">{faq.answer}</p>
+                      <p className="text-slate-400 print:text-slate-650 leading-relaxed font-light font-sans text-xs pl-4 border-l-2 border-rose-500/20" dangerouslySetInnerHTML={{ __html: faq.answer }} />
                     </div>
                   ))}
                 </div>

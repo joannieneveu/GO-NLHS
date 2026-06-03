@@ -182,7 +182,11 @@ export default function TeamTab() {
                                 {/* Info block */}
                                 <div className="p-6 flex flex-col flex-1">
                                   <h4 className="text-2xl font-serif mb-1 group-hover:text-rose-150 transition-colors">{m.name}</h4>
-                                  <p className="text-rose-455 text-[10px] font-bold uppercase tracking-wider mb-3 leading-snug">{m.role}</p>
+                                  <div className="text-rose-300 text-[10px] font-bold uppercase tracking-wider mb-3 leading-snug space-y-0.5">
+                                    {m.role.split('\n').map((line, lIdx) => (
+                                      <div key={lIdx}>{line}</div>
+                                    ))}
+                                  </div>
                                   
                                   {m.bio && (
                                     <p className="text-xs text-slate-400 font-light leading-relaxed italic mb-5 flex-1">
@@ -246,12 +250,12 @@ export default function TeamTab() {
         <div className="p-5 space-y-2 bg-white/5 rounded-xl border border-transparent hover:border-white/5 transition-colors">
           <Shield size={24} className="text-rose-400 mx-auto md:mx-0" />
           <h5 className="font-serif text-lg">Integrated Tumor Board</h5>
-          <p className="text-xs text-slate-500 leading-relaxed font-light">Every high-grade or recurrent cancer case is presented in a weekly board of surgeons, radiotherapists, pathologists, and nurses to establish custom guidelines.</p>
+          <p className="text-xs text-slate-500 leading-relaxed font-light">Every high-grade or recurrent cancer case is presented in a weekly board of surgeons, radiotherapists, pathologists, pharmacists and nurses to establish custom recommendations and guidelines.</p>
         </div>
 
         <div className="p-5 space-y-2 bg-white/5 rounded-xl border border-transparent hover:border-white/5 transition-colors">
           <Heart size={24} className="text-indigo-400 mx-auto md:mx-0" />
-          <h5 className="font-serif text-lg">Dedicated GP Care</h5>
+          <h5 className="font-serif text-lg">Dedicated Continued Care</h5>
           <p className="text-xs text-slate-500 leading-relaxed font-light">Dr. Carla Saldanha and Dr. Claire Elliott provide primary follow-up loops so patients always have accessible contacts between active treatments.</p>
         </div>
 

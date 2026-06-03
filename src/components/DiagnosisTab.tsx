@@ -189,7 +189,7 @@ export default function DiagnosisTab() {
                     <div className="md:col-span-5 flex justify-center bg-slate-950/60 p-4 rounded-xl border border-white/5 select-none overflow-hidden shrink-0">
                       {/* Real generated high-quality illustration representing Uterus & Endometrium */}
                       <img 
-                        src="/src/assets/images/uterus_anatomy_diagram_1780483699547.png" 
+                        src="/uterus_diagram.png" 
                         alt="Endometrial Anatomy & Inner Lining" 
                         referrerPolicy="no-referrer"
                         className="w-full max-w-[150px] h-auto rounded-lg border border-white/10 shadow-md shadow-rose-950/40 hover:scale-[1.03] transition-transform duration-300"
@@ -519,7 +519,7 @@ export default function DiagnosisTab() {
                       <div className="lg:col-span-5 flex justify-center bg-slate-950/60 p-4 rounded-xl border border-white/5 overflow-hidden shrink-0">
                         {/* Real generated high-quality illustration representing Dual IV + IP Chemotherapy */}
                         <img 
-                          src="/src/assets/images/ip_chemo_illustration_1780485620483.png" 
+                          src="/ip_chemo.png" 
                           alt="Dual IV + IP Chemotherapy Delivery" 
                           referrerPolicy="no-referrer"
                           className="w-full max-w-[170px] h-auto rounded-lg border border-white/10 shadow-md shadow-teal-950/40 hover:scale-[1.03] transition-transform duration-300"

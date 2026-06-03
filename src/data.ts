@@ -8,16 +8,16 @@ import { TeamMember, AdminContact, Diagnosis, ClinicalTrial, StoryOfHope, FAQIte
 export const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Dr. Joannie Neveu",
-    role: "Division Head - Gynecologic Oncology, NLHS, MIGS - Advanced Laparoscopy",
+    role: "Division Head - Gynecologic Oncology, NLHS\nMIGS - Advanced Laparoscopy",
     image: "dr_Joannie_Neveu.png",
     bio: "Passionate about providing top-tier oncological and advanced minimally invasive care with concrete support and empathy for patients and their families.",
     category: "medical",
   },
   {
     name: "Dr. Patti Power",
-    role: "Gynecologic Oncologist, Clinical Chief Cancer Centre",
+    role: "Gynecologic Oncologist\nClinical Chief Cancer Centre, NLHS",
     image: "dr_patti_power.png",
-    bio: "Focused on clinical leadership, high-grade gynecological cancer treatment pathways, and patient advocacy throughout NL.",
+    bio: "Focused on clinical leadership, gynecological cancer treatment pathways, and patient advocacy throughout NL.",
     category: "medical",
   },
   {
@@ -31,7 +31,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Dr. Carla Saldanha",
     role: "GP Oncology",
     image: "dr_carla_saldanha.png",
-    bio: "Dedicated to comprehensive clinical follow-up, symptom control, and primary support integration.",
+    bio: "Dedicated to comprehensive maintenance treatment and clinical follow-up, symptom control, and primary support integration.",
     category: "medical",
   },
   {
@@ -53,7 +53,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Amy Moore",
     role: "Nurse",
     image: "amy_moore.png",
-    bio: "Clinical care coordinator assisting patients step-by-step through their active care cycles and schedules.",
+    bio: "Clinical care coordinator assisting patients step-by-step through their active care cycles and schedules. Supporting patients and their family across the province throughout their journey.",
     phone: "709-777-2488",
     category: "nurse",
   },
@@ -384,22 +384,22 @@ export const FAQS: FAQItem[] = [
   },
   {
     question: "When can I return to work?",
-    answer: "This depends on your specific surgery. Robot-assisted or laparoscopic surgeries usually allow return to light work in 3 to 4 weeks. Open vertical midline incisions generally require 6 to 8 weeks of convalescence.",
+    answer: "This depends on your specific surgery. Robot-assisted or laparoscopic surgeries usually allow return to light work in 2 to 4 weeks. Open vertical midline incisions generally require 6 to 8 weeks of convalescence.",
     category: "recovery"
   },
   {
-    question: "How do I contact the clinical team after hours?",
-    answer: "For immediate medical emergencies, please present directly to the nearest Emergency Department. For urgent care-related questions, you can contact our 24/7 nursing line, or for non-urgent administrative matters, leave a voice message on our administrative assistants' direct line.",
+    question: "How can I contact my clinical team?",
+    answer: "For immediate medical emergencies, please present directly to the nearest Emergency Department. For urgent care-related questions, you can contact our nursing line (709-777-7601) or pharmacy line (709-777-2488), or for non-urgent administrative matters, leave a voice message on our administrative assistants' direct line.",
     category: "contact" as any
   },
   {
-    question: "What is an ERAS carbohydrate drink?",
-    answer: "It is a clear, specifically formulated carbohydrate drink consumed up to 2 hours before anesthesia. It prevents insulin resistance associated with fasting, maintains energy, and helps you feel stronger and less nauseous after waking up.",
+    question: "What is a carbohydrate drink?",
+    answer: "It is a clear, specifically formulated carbohydrate drink consumed up to 2 hours before anesthesia. It prevents insulin resistance associated with fasting, maintains energy, and helps you feel stronger and less nauseous after waking up. <strong class=\"font-semibold text-slate-200\">Ask your anesthesiologist in the pre-admission clinic if you are eligible</strong>",
     category: "surgery"
   },
   {
-    question: "How do I care for my surgical incisions after robotic surgery?",
-    answer: "Keep the dressings dry and intact for the first 48 hours. Afterward, you can shower and let warm, soapy water gently run over the incisions. Do not scrub or soak in tubs/pools, and gently pat dry with a clean towel.",
+    question: "How do I care for my surgical incision?",
+    answer: "If robotic or laparoscopic: no dressing are applied, there are sutures under the skin and glue on the skin. It will fall off on its own.<br/><br/>If laparotomy, keep the dressings dry and intact for the first 48 hours. Afterward, you can shower and let warm, soapy water gently run over the incisions. Do not scrub or soak in tubs/pools, and gently pat dry with a clean towel.",
     category: "recovery"
   },
   {

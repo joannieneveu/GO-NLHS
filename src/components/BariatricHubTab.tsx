@@ -62,6 +62,20 @@ export default function BariatricHubTab() {
   const [patientInterestName, setPatientInterestName] = useState('');
   const [patientInterestPhone, setPatientInterestPhone] = useState('');
 
+  // --- Quality of Life (QOL) Surveys States ---
+  const [bqlEnjoyment, setBqlEnjoyment] = useState<number>(0);
+  const [bqlBodyImage, setBqlBodyImage] = useState<number>(0);
+  const [bqlMobility, setBqlMobility] = useState<number>(0);
+  const [bqlConfidence, setBqlConfidence] = useState<number>(0);
+  const [bqlEmotion, setBqlEmotion] = useState<number>(0);
+
+  const [eqMobility, setEqMobility] = useState<number>(0);
+  const [eqSelfCare, setEqSelfCare] = useState<number>(0);
+  const [eqUsualActivities, setEqUsualActivities] = useState<number>(0);
+  const [eqPainDiscomfort, setEqPainDiscomfort] = useState<number>(0);
+  const [eqAnxietyDepression, setEqAnxietyDepression] = useState<number>(0);
+  const [eqVas, setEqVas] = useState<number>(75);
+
   // --- Interactive Sleeve Assistant Chat Box States ---
   const [chatMessages, setChatMessages] = useState<Array<{ id: string; sender: 'patient' | 'assistant'; text: string; time: string }>>([
     {
@@ -118,6 +132,15 @@ export default function BariatricHubTab() {
         type: 'pdf',
         isPreloaded: true,
         description: 'Printable copy of the validation metrics questionnaires (BQL Index).'
+      },
+      {
+        id: 'pre-4',
+        name: 'EQ5D5L_Health_Questionnaire.pdf',
+        size: '280 KB',
+        uploadedAt: 'Pre-loaded',
+        type: 'pdf',
+        isPreloaded: true,
+        description: 'Validation Quality of Life Metrics Questionnaire (EQ-5D-5L UK English edition).'
       },
       {
         id: 'pre-study-consent',
@@ -630,6 +653,176 @@ Contact MUN coordinator Melanie Reardon (709-777-4836) or seek emergency care if
     const link = document.createElement('a');
     link.href = url;
     link.download = 'NLHS_Bariatric_Sleeve_Surgery_Patient_Manual_v5_Summary.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadBQLSurvey = () => {
+    const totalScore = bqlEnjoyment + bqlBodyImage + bqlMobility + bqlConfidence + bqlEmotion;
+    const isCompleted = bqlEnjoyment > 0 && bqlBodyImage > 0 && bqlMobility > 0 && bqlConfidence > 0 && bqlEmotion > 0;
+    
+    let qolRating = "Uncompleted / Self-Assessment Pending";
+    if (isCompleted) {
+      if (totalScore <= 10) qolRating = "Severely Compromised Quality of Life (Urgent Discussion Advised)";
+      else if (totalScore <= 17) qolRating = "Moderately Compromised Quality of Life (Outpatient Support Program Recommended)";
+      else qolRating = "Excellent Patient Wellbeing & Coping Index";
+    }
+
+    const content = `================================================================================
+NL HEALTH SERVICES (NLHS) - BARIATRIC PATIENT WELLBEING REGISTRY
+BARIATRIC QUALITY OF LIFE (BQL) INDEX CLINICAL SELF-ASSESSMENT
+================================================================================
+Clinical Program Lead: Dr. Joannie Neveu
+Clinical Care Coordination: Melanie Reardon / Tayler Carroll
+Database Reference Code: NLHS-BQL-QOL-V2
+Report Generated on: ${new Date().toLocaleDateString()}
+
+PATIENT SURVEY COMPLETION PROFILE:
+- Completion Status: ${isCompleted ? "COMPLETED SELF-ASSESSMENT" : "TEMPLATED / BLANK SHEET (For Manual Completion)"}
+- Aggregated BQL Health Index: ${isCompleted ? `${totalScore} / 25` : "___ / 25"}
+- Quality of Life Interpretation: ${qolRating}
+
+--------------------------------------------------------------------------------
+1. DETAILED WELLBEING SPECIFICATIONS (Score Range: 1-5 [1=Very Poor, 5=Excellent])
+--------------------------------------------------------------------------------
+
+[A] Enjoyment of Food and Social Eat-Well Milestones:
+    Score: ${bqlEnjoyment || "___"} / 5
+    *Clinician Notes: Measures tolerance of phase progression diet structures and social integration index.
+
+[B] Body Image and Physical Appearance Acceptance:
+    Score: ${bqlBodyImage || "___"} / 5
+    *Clinician Notes: Identifies dysmorphia or rapid massive weight loss adaptation curves.
+
+[C] Outpatient Mobility, Joint Stability and Stature Comfort:
+    Score: ${bqlMobility || "___"} / 5
+    *Clinician Notes: Validates progress against weight-loss clinical mobility goals.
+
+[D] Social Self-Confidence, Intimacy and Network Support:
+    Score: ${bqlConfidence || "___"} / 5
+    *Clinician Notes: Measures psychosocial adjustment & partner-based backing loops.
+
+[E] General Optimism, Mood Resilience, and Coping Index:
+    Score: ${bqlEmotion || "___"} / 5
+    *Clinician Notes: Monitors emotional stability and rule adherence stress levels.
+
+--------------------------------------------------------------------------------
+Patient Printed Name: ____________________________  MCP #: _____________________
+Patient Signature: _______________________________  Date: ______________________
+Reviewing Surgeon / Coordinator Signature: ______________________________________
+================================================================================`;
+    
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'NLHS_BQL_Quality_Of_Life_Self_Assessment.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadEQ5DSurvey = () => {
+    const isCompleted = eqMobility > 0 && eqSelfCare > 0 && eqUsualActivities > 0 && eqPainDiscomfort > 0 && eqAnxietyDepression > 0;
+    
+    const getOptionLabel = (dim: string, val: number) => {
+      if (val === 0) return "Not completed (please check options)";
+      const labels: Record<string, string[]> = {
+        mobility: [
+          "I have no problems in walking about",
+          "I have slight problems in walking about",
+          "I have moderate problems in walking about",
+          "I have severe problems in walking about",
+          "I am unable to walk about"
+        ],
+        selfCare: [
+          "I have no problems washing or dressing myself",
+          "I have slight problems washing or dressing myself",
+          "I have moderate problems washing or dressing myself",
+          "I have severe problems washing or dressing myself",
+          "I am unable to wash or dress myself"
+        ],
+        usualAct: [
+          "I have no problems doing my usual activities",
+          "I have slight problems doing my usual activities",
+          "I have moderate problems doing my usual activities",
+          "I have severe problems doing my usual activities",
+          "I am unable to do my usual activities"
+        ],
+        pain: [
+          "I have no pain or discomfort",
+          "I have slight pain or discomfort",
+          "I have moderate pain or discomfort",
+          "I have severe pain or discomfort",
+          "I have extreme pain or discomfort"
+        ],
+        anxiety: [
+          "I am not anxious or depressed",
+          "I am slightly anxious or depressed",
+          "I am moderately anxious or depressed",
+          "I am severely anxious or depressed",
+          "I am extremely anxious or depressed"
+        ]
+      };
+      return labels[dim]?.[val - 1] || "Not completed";
+    };
+
+    const content = `================================================================================
+EUROQOL EQ-5D-5L HEALTH STATE SELF-ASSESSMENT
+================================================================================
+Licensed/Curated for Bariatric-Hysterectomy Clinical Pathway (St. John's, NL)
+Reference Document: EQ-5D-5L UK-EN-2009 Clinical Edition
+Report Generated on: ${new Date().toLocaleDateString()}
+
+PATIENT PROFILE SUMMARY:
+- Completion Status: ${isCompleted ? "COMPLETED HEALTH STATE REPORT" : "BLANK TEMPLATE SHEET"}
+- Composite State Profile (Health Code): ${isCompleted ? `${eqMobility}${eqSelfCare}${eqUsualActivities}${eqPainDiscomfort}${eqAnxietyDepression}` : "X-X-X-X-X"}
+- Patient Health State Index (EQ-VAS): ${eqVas} / 100 (0=Worst, 100=Best)
+
+--------------------------------------------------------------------------------
+1. THE FIVE DIMENSIONS OF HEALTH (Patient Selected Levels)
+--------------------------------------------------------------------------------
+
+[1] MOBILITY (Walking Capability):
+    Level selected: ${eqMobility || "___"} / 5
+    Label: "${getOptionLabel('mobility', eqMobility)}"
+
+[2] SELF-CARE (Washing and Dressing):
+    Level selected: ${eqSelfCare || "___"} / 5
+    Label: "${getOptionLabel('selfCare', eqSelfCare)}"
+
+[3] USUAL ACTIVITIES (Work, Study, Housework, Family/Leisure):
+    Level selected: ${eqUsualActivities || "___"} / 5
+    Label: "${getOptionLabel('usualAct', eqUsualActivities)}"
+
+[4] PAIN / DISCOMFORT:
+    Level selected: ${eqPainDiscomfort || "___"} / 5
+    Label: "${getOptionLabel('pain', eqPainDiscomfort)}"
+
+[5] ANXIETY / DEPRESSION:
+    Level selected: ${eqAnxietyDepression || "___"} / 5
+    Label: "${getOptionLabel('anxiety', eqAnxietyDepression)}"
+
+--------------------------------------------------------------------------------
+2. VISUAL ANALOGUE SCALE (EQ-VAS)
+--------------------------------------------------------------------------------
+The Patient Visual Health Thermometer is marked at: ${eqVas} / 100
+(100 indicates the absolute best imaginable health; 0 indicates the worst imaginable health).
+
+--------------------------------------------------------------------------------
+Patient Printed Name: ____________________________  MCP #: _____________________
+Patient Signature: _______________________________  Date: ______________________
+Reviewing Physician Signature: _________________________________________________
+================================================================================`;
+
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'NLHS_EQ5D5L_Health_State_Assessment.txt';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -2575,6 +2768,68 @@ Contact MUN coordinator Melanie Reardon (709-777-4836) or seek emergency care if
               className="w-full py-2.5 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/35 text-purple-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-colors font-sans"
             >
               <Download size={13} /> Download Informed Study Consent
+            </button>
+          </div>
+
+          {/* Card 5: BQL QOL Survey */}
+          <div className="p-5 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-rose-500/20 shadow-lg flex flex-col justify-between space-y-4 font-sans transition-all duration-200">
+            <div className="space-y-3 font-sans">
+              <div className="flex items-center justify-between">
+                <span className="px-2.5 py-0.5 rounded bg-rose-500/10 border border-rose-500/20 text-[10px] font-mono tracking-widest text-rose-300 font-bold uppercase inline-block font-sans">
+                  Validation Survey • BQL
+                </span>
+                <Heart size={16} className="text-rose-450" />
+              </div>
+              <h4 className="text-sm font-sans font-bold text-slate-100 font-sans">Bariatric Quality of Life (BQL) Index</h4>
+              <p className="text-xs text-slate-400 leading-relaxed font-light font-sans">
+                A specialized patient-reported counseling survey designed to measure social eating comfort, body image adaptation curves, physical mobility status, and emotional optimism post-surgery.
+              </p>
+              <div className="p-3 bg-slate-900/40 rounded-xl border border-white/5 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-rose-300 block">Assessment Metrics:</span>
+                <ul className="text-[11px] text-slate-400 space-y-1 list-disc list-inside font-light">
+                  <li>Phase-diet progression comfort</li>
+                  <li>Rapid massive weight adaptation</li>
+                  <li>Physical joint & stature comfort</li>
+                  <li>Psychosocial support network backing</li>
+                </ul>
+              </div>
+            </div>
+            <button
+              onClick={downloadBQLSurvey}
+              className="w-full py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/35 text-rose-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-colors font-sans"
+            >
+              <Download size={13} /> Download BQL Questionnaire
+            </button>
+          </div>
+
+          {/* Card 6: EQ-5D-5L QOL Survey */}
+          <div className="p-5 rounded-2xl bg-slate-950/40 border border-white/5 hover:border-emerald-500/20 shadow-lg flex flex-col justify-between space-y-4 font-sans transition-all duration-200">
+            <div className="space-y-3 font-sans">
+              <div className="flex items-center justify-between">
+                <span className="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-mono tracking-widest text-emerald-300 font-bold uppercase inline-block font-sans">
+                  Standardized • EQ-5D-5L
+                </span>
+                <Activity size={16} className="text-emerald-400" />
+              </div>
+              <h4 className="text-sm font-sans font-bold text-slate-100 font-sans">EQ-5D-5L Health Questionnaire</h4>
+              <p className="text-xs text-slate-400 leading-relaxed font-light font-sans">
+                An internationally recognized, highly standardized health state instrument measuring 5 crucial daily living dimensions alongside a visual health thermometer.
+              </p>
+              <div className="p-3 bg-slate-900/40 rounded-xl border border-white/5 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 block">Assessment Dimensions:</span>
+                <ul className="text-[11px] text-slate-400 space-y-1 list-disc list-inside font-light">
+                  <li>Functional mobility & walking ability</li>
+                  <li>Personal care & washing/dressing safety</li>
+                  <li>Usual work, study, & domestic activities</li>
+                  <li>Pain, discomfort, & emotional coping index</li>
+                </ul>
+              </div>
+            </div>
+            <button
+              onClick={downloadEQ5DSurvey}
+              className="w-full py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/35 text-emerald-300 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-colors font-sans"
+            >
+              <Download size={13} /> Download EQ-5D-5L Questionnaire
             </button>
           </div>
 
